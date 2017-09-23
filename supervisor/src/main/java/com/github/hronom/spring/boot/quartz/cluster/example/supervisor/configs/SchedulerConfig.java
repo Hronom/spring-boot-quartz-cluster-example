@@ -1,6 +1,6 @@
 package com.github.hronom.spring.boot.quartz.cluster.example.supervisor.configs;
 
-import com.github.hronom.spring.boot.quartz.cluster.example.supervisor.spring.AutowiringSpringBeanJobFactory;
+import com.github.hronom.spring.boot.quartz.cluster.example.common.spring.AutowiringSpringBeanJobFactory;
 
 import org.quartz.spi.JobFactory;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
@@ -27,7 +27,7 @@ public class SchedulerConfig {
     @Bean
     public JobFactory jobFactory(
         ApplicationContext applicationContext,
-        // injecting SpringLiquibase to ensure liquibase is already initialized and created the quartz tables:
+        // Injecting SpringLiquibase to ensure liquibase is already initialized and created the Quartz tables
         SpringLiquibase springLiquibase
     ) {
         AutowiringSpringBeanJobFactory jobFactory = new AutowiringSpringBeanJobFactory();
@@ -39,11 +39,8 @@ public class SchedulerConfig {
     public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource, JobFactory jobFactory)
         throws IOException {
         SchedulerFactoryBean factory = new SchedulerFactoryBean();
-        // this allows to update triggers in DB when updating settings in config file:
-        //factory.setOverwriteExistingJobs(true);
         factory.setDataSource(dataSource);
         factory.setJobFactory(jobFactory);
-
         factory.setQuartzProperties(quartzProperties());
         return factory;
     }

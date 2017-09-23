@@ -1,4 +1,4 @@
-package com.github.hronom.spring.boot.quartz.cluster.example.supervisor.spring;
+package com.github.hronom.spring.boot.quartz.cluster.example.common.spring;
 
 import org.quartz.spi.TriggerFiredBundle;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -11,8 +11,8 @@ import org.springframework.scheduling.quartz.SpringBeanJobFactory;
  * Created by david on 2015-01-20.
  * @see https://gist.github.com/jelies/5085593
  */
-public final class AutowiringSpringBeanJobFactory extends SpringBeanJobFactory implements
-        ApplicationContextAware {
+public final class AutowiringSpringBeanJobFactory extends SpringBeanJobFactory
+    implements ApplicationContextAware {
 
     private transient AutowireCapableBeanFactory beanFactory;
 
@@ -23,7 +23,7 @@ public final class AutowiringSpringBeanJobFactory extends SpringBeanJobFactory i
 
     @Override
     protected Object createJobInstance(TriggerFiredBundle bundle) throws Exception {
-        final Object job = super.createJobInstance(bundle);
+        Object job = super.createJobInstance(bundle);
         beanFactory.autowireBean(job);
         return job;
     }
