@@ -1,4 +1,4 @@
-package com.github.hronom.spring.boot.quartz.cluster.example.supervisor.service;
+package com.github.hronom.spring.boot.quartz.cluster.example.supervisor.services;
 
 import com.github.hronom.spring.boot.quartz.cluster.example.common.job.TestJob1;
 import com.github.hronom.spring.boot.quartz.cluster.example.supervisor.controllers.JobStatus;
@@ -79,7 +79,8 @@ public class JobsService {
     }
 
     public boolean deleteJob(String id) throws SchedulerException {
-        return scheduler.deleteJob(new JobKey(id, groupName));
+        JobKey jobKey = new JobKey(id, groupName);
+        return scheduler.deleteJob(jobKey);
     }
 
     public List<String> getJobs() throws SchedulerException {
@@ -91,6 +92,9 @@ public class JobsService {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Check realization was inspired by https://stackoverflow.com/a/31479434/285571
+     */
     public List<JobStatus> getJobsStatuses() throws SchedulerException {
         LinkedList<JobStatus> list = new LinkedList<>();
         for (JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName))) {

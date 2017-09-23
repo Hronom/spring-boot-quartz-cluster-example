@@ -1,6 +1,6 @@
 package com.github.hronom.spring.boot.quartz.cluster.example.supervisor.controllers;
 
-import com.github.hronom.spring.boot.quartz.cluster.example.supervisor.service.JobsService;
+import com.github.hronom.spring.boot.quartz.cluster.example.supervisor.services.JobsService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
