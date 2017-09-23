@@ -1,0 +1,13 @@
+version: '2'
+services:
+  mysql:
+    image: mysql:5.7.19
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+    logging:
+      driver: json-file
+      options:
+        max-size: "250m"
+        max-file: "10"
