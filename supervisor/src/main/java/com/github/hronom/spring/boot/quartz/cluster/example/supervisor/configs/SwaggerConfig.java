@@ -18,7 +18,7 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
             .select()
-            .apis(RequestHandlerSelectors.basePackage("com.github.hronom.spring.boot.quartz.cluster.playground.supervisor"))
+            .apis(RequestHandlerSelectors.basePackage("com.github.hronom.spring.boot.quartz.cluster.example.supervisor"))
             .paths(PathSelectors.any())
             .build()
             .apiInfo(apiInfo());
