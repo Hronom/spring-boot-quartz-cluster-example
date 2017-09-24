@@ -1,5 +1,6 @@
 package com.github.hronom.spring.boot.quartz.cluster.example.worker.configs;
 
+import com.github.hronom.spring.boot.quartz.cluster.example.common.service.JobsListenerService;
 import com.github.hronom.spring.boot.quartz.cluster.example.common.spring.AutowiringSpringBeanJobFactory;
 
 import org.quartz.spi.JobFactory;
@@ -30,12 +31,13 @@ public class SchedulerConfig {
     }
 
     @Bean
-    public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource, JobFactory jobFactory)
+    public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource, JobFactory jobFactory, JobsListenerService jobsListenerService)
         throws IOException {
         SchedulerFactoryBean factory = new SchedulerFactoryBean();
         factory.setDataSource(dataSource);
         factory.setJobFactory(jobFactory);
         factory.setQuartzProperties(quartzProperties());
+        factory.setGlobalJobListeners(jobsListenerService);
         return factory;
     }
 
