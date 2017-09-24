@@ -8,7 +8,6 @@ import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
-import org.quartz.TriggerKey;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.quartz.utils.Key;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import static org.quartz.JobBuilder.newJob;
@@ -31,8 +28,6 @@ import static org.quartz.TriggerBuilder.newTrigger;
 public class JobsService {
     private final String groupName = "normal-group";
 
-    private final Set<String> jobsIds = ConcurrentHashMap.newKeySet();
-
     private final Scheduler scheduler;
 
     @Autowired
@@ -40,41 +35,36 @@ public class JobsService {
         this.scheduler = schedulerFactory.getScheduler();
     }
 
-    public List<String> startNewJobs(int jobs) throws SchedulerException {
+    public List<String> addNewJobs(int jobs) throws SchedulerException {
         LinkedList<String> list = new LinkedList<>();
         for (int i = 0; i < jobs; i++) {
-            list.add(startNewJob());
+            list.add(addNewJob());
         }
         return list.stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList());
     }
 
-    public String startNewJob() throws SchedulerException {
+    public String addNewJob() throws SchedulerException {
         String id = UUID.randomUUID().toString();
+        
+        JobDetail job =
+            newJob(TestJob1.class)
+                .withIdentity(id, groupName)
+                // http://www.quartz-scheduler.org/documentation/quartz-2.2.x/configuration/ConfigJDBCJobStoreClustering.html
+                // https://stackoverflow.com/a/19270566/285571
+                .requestRecovery(true)
+                .build();
 
-        // define the job and tie it to our HelloJob class
-        JobDetail job = newJob(TestJob1.class)
-            .withIdentity(id, groupName)
-            // http://www.quartz-scheduler.org/documentation/quartz-2.2.x/configuration/ConfigJDBCJobStoreClustering.html
-            // https://stackoverflow.com/a/19270566/285571
-            .requestRecovery(true)
-            .build();
+        Trigger trigger =
+            newTrigger()
+                .withIdentity(id + "-trigger", groupName)
+                .startNow()
+                .withSchedule(
+                    simpleSchedule().withIntervalInSeconds(30)
+                )
+                .build();
 
-        Trigger trigger = scheduler.getTrigger(new TriggerKey(id + "-trigger", groupName));
-
-        if (trigger == null) {
-            // Trigger the job to run now, and then every 40 seconds
-            trigger =
-                newTrigger()
-                    .withIdentity(id + "-trigger", groupName)
-                    .startNow()
-                    .withSchedule(
-                        simpleSchedule()
-                            .withIntervalInSeconds(30)
-                    ).build();
-        }
-
-        // Tell quartz to schedule the job using our trigger
         scheduler.scheduleJob(job, trigger);
+
         return id;
     }
 

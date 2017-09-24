@@ -31,7 +31,7 @@ public class TestController {
     @RequestMapping(value = "/jobs", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<String>> addJobs(@RequestParam(defaultValue = "10", required = false) int jobs)
         throws SchedulerException {
-        List<String> ids = jobsService.startNewJobs(jobs);
+        List<String> ids = jobsService.addNewJobs(jobs);
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(ids);
