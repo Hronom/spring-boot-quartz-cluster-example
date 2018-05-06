@@ -44,6 +44,9 @@ public class SchedulerConfig {
         factory.setJobFactory(jobFactory);
         factory.setQuartzProperties(quartzProperties());
         factory.setGlobalJobListeners(jobsListenerService);
+        // https://medium.com/@rudra.ramesh/use-following-code-in-supervisor-app-while-creating-schedulerfactorybean-object-now-supervisor-fd2f95365350
+        // If you need to disable launching of jobs on supervisor use this:
+        //factory.setAutoStartup(false);
         return factory;
     }
 

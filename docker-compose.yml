@@ -1,7 +1,7 @@
 version: '2'
 services:
   mysql:
-    image: mysql:5.7.19
+    image: mysql:5.7.22
     ports:
       - "3306:3306"
     environment:
