@@ -16,6 +16,7 @@
         <module>worker</module>
         <module>supervisor</module>
         <module>common</module>
+      <module>just-to-discover-docker</module>
     </modules>
     <packaging>pom</packaging>
 

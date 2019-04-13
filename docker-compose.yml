@@ -1,4 +1,4 @@
-version: '2'
+version: '3.7'
 services:
   mysql:
     image: mysql:5.7.22
@@ -9,5 +9,5 @@ services:
     logging:
       driver: json-file
       options:
-        max-size: "250m"
+        max-size: "50m"
         max-file: "10"

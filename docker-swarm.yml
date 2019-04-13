@@ -1,0 +1,50 @@
+version: '3.7'
+services:
+  docker-mysql:
+    image: mysql:5.7.22
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+    logging:
+      driver: json-file
+      options:
+        max-size: "250m"
+        max-file: "10"
+    networks:
+      - quartz-cluster
+  quartz-supervisor:
+    image: cluster/quartz-supervisor:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - docker-mysql
+    networks:
+      - quartz-cluster
+  testing-docker:
+    image: cluster/testing-docker:latest
+    ports:
+      - "8081:8080"
+    depends_on:
+      - docker-mysql
+    networks:
+      - quartz-cluster
+  quartz-worker:
+    image: cluster/quartz-worker:latest
+    deploy:
+      replicas: 4
+    depends_on:
+      - docker-mysql
+      - quartz-supervisor
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost"]
+#      interval: 1m30s
+#      timeout: 10s
+#      retries: 3
+#      start_period: 40s
+    networks:
+      - quartz-cluster
+
+networks:
+  quartz-cluster:
+    name: quartz_network
