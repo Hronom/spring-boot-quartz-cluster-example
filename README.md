@@ -4,7 +4,7 @@ Also in this example we autowire service that currently runs on the instance whe
 
 ## Description of modules
 ### Supervisor module
-The supervisor module have Swagger ui with REST commands. It available at [http://localhost:8080/swagger-ui.html#!/](http://localhost:8080/swagger-ui.html#!/)
+The supervisor module have Swagger ui with REST commands. It available at [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 You can use this commands to add jobs, view jobs statuses and delete jobs.
 
 ### Worker module
@@ -21,4 +21,4 @@ After that you need to run first `supervisor` it will creates necessary database
  for quartz. 
 After it starts run `worker`.
 
-After that open in your browser swagger ui [http://localhost:8080/swagger-ui.html#!/](http://localhost:8080/swagger-ui.html#!/)
+After that open in your browser swagger ui [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
