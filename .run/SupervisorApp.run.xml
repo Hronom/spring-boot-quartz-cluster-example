@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="SupervisorApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="supervisor" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.hronom.spring.boot.quartz.cluster.example.supervisor.SupervisorApp" />
+    <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+      <option name="credential" />
+      <option name="region" />
+      <option name="useCurrentConnection" value="false" />
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

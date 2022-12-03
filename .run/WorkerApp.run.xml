@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="WorkerApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="worker" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.hronom.spring.boot.quartz.cluster.example.worker.WorkerApp" />
+    <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+      <option name="credential" />
+      <option name="region" />
+      <option name="useCurrentConnection" value="false" />
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

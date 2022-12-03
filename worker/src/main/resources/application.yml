@@ -1,0 +1,13 @@
+endpoints:
+    jmx:
+        unique-names: true
+server:
+    port: 8081
+spring:
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        password: 12345
+        url: jdbc:mysql://localhost/test?useSSL=false&allowPublicKeyRetrieval=true
+        username: root
+    liquibase:
+        change-log: classpath:db/changelog/db.changelog-master.xml
