@@ -1,4 +1,5 @@
-This example demonstrates how to run Spring Boot application with Quartz in cluster mode.
+This example demonstrates how to run Spring Boot application with Quartz in cluster mode.  
+[Article on dev.to](https://dev.to/hronom/spring-boot-quartz-scheduler-in-cluster-mode-35ej)
 
 Also in this example, we autowire service that currently runs on the instance where jobs are executed.
 
