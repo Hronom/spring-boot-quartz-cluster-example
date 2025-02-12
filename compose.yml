@@ -1,7 +1,7 @@
 services:
   spring-boot-quartz-cluster-example-mysql:
     container_name: spring-boot-quartz-cluster-example-mysql
-    image: mysql:8.0.31
+    image: mysql:9.2.0
     ports:
       - "3306:3306"
     environment:
