@@ -1,4 +1,3 @@
-version: '2'
 services:
   spring-boot-quartz-cluster-example-mysql:
     container_name: spring-boot-quartz-cluster-example-mysql

@@ -14,7 +14,7 @@ Execute tasks that are submitted to the cluster.
 Before you start `supervisor` and `worker` apps you need to start MySQL database, to do that you can
  use `docker-compose.yml` file and execute in the project directory: 
 ```
-docker-compose up -d
+docker compose up -d
 ``` 
  
 After that you need to run first `supervisor` it will create necessary database(`test`) and tables
