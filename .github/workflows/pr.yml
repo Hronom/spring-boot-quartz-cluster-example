@@ -1,0 +1,54 @@
+name: PR
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Start dependencies
+        run: |
+          docker compose up -d
+
+      - name: Get IPs of dependencies
+        id: dependencies-ipaddresses
+        run: |
+          echo "mysql_ipaddress=$(docker inspect spring-boot-quartz-cluster-example-mysql | jq '.[0].NetworkSettings.Networks["spring-boot-quartz-cluster-example_default"].IPAddress' | tr -d '"\n')" >> $GITHUB_OUTPUT
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            network=spring-boot-quartz-cluster-example_default
+
+      - name: Docker Metadata
+        id: docker-meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            docker.pkg.github.com/spring-boot-quartz-cluster-example
+          tags: |
+            type=raw,value=${{ github.run_number }}-tests-latest
+
+      - name: Build and push container
+        id: docker-build-push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: ${{ steps.docker-meta.outputs.tags }}
+          labels: ${{ steps.docker-meta.outputs.labels }}
+          add-hosts: |
+            spring-boot-quartz-cluster-example-mysql:${{ steps.dependencies-ipaddresses.outputs.mysql_ipaddress }}
+          target: tests
+          provenance: false
